@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en" class="mdui-theme-auto">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+  <link href="/src/style.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KernelPatch on Web</title>
+</head>
+
+<body>
+  <mdui-layout class="h-screen">
+    <mdui-top-app-bar class="flex items-center" style="position: relative;" scroll-behavior="elevate">
+      <div class="w-2"></div>
+      <mdui-icon class="w-10 h-10">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+          <text x="50" y="80" font-family="Arial" font-size="80" text-anchor="middle">⭕</text>
+          <text x="50" y="65" font-family="Arial" font-size="60" text-anchor="middle">💰</text>
+        </svg>
+      </mdui-icon>
+      <div class="w-2"></div>
+      <mdui-top-app-bar-title class="font-bold">KernelPatch on Web</mdui-top-app-bar-title>
+      <div style="flex-grow: 1"></div>
+      <mdui-button-icon name="aboutButton">
+        <mdui-icon>
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+            <path
+              d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8z"
+              fill="currentColor"></path>
+          </svg>
+        </mdui-icon>
+      </mdui-button-icon>
+      <mdui-button-icon href="https://github.com/CircleCashTeam" target="_blank">
+        <mdui-icon>
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 496 512">
+            <path
+              d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6c-3.3.3-5.6-1.3-5.6-3.6c0-2 2.3-3.6 5.2-3.6c3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9c2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9c.3 2 2.9 3.3 5.9 2.6c2.9-.7 4.9-2.6 4.6-4.6c-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2c12.8 2.3 17.3-5.6 17.3-12.1c0-6.2-.3-40.4-.3-61.4c0 0-70 15-84.7-29.8c0 0-11.4-29.1-27.8-36.6c0 0-22.9-15.7 1.6-15.4c0 0 24.9 2 38.6 25.8c21.9 38.6 58.6 27.5 72.9 20.9c2.3-16 8.8-27.1 16-33.7c-55.9-6.2-112.3-14.3-112.3-110.5c0-27.5 7.6-41.3 23.6-58.9c-2.6-6.5-11.1-33.3 2.6-67.9c20.9-6.5 69 27 69 27c20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27c13.7 34.7 5.2 61.4 2.6 67.9c16 17.7 25.8 31.5 25.8 58.9c0 96.5-58.9 104.2-114.8 110.5c9.2 7.9 17 22.9 17 46.4c0 33.7-.3 75.4-.3 83.6c0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252C496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2c1.6 1.6 3.9 2.3 5.2 1c1.3-1 1-3.3-.7-5.2c-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9c1.6 1 3.6.7 4.3-.7c.7-1.3-.3-2.9-2.3-3.9c-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2c2.3 2.3 5.2 2.6 6.5 1c1.3-1.3.7-4.3-1.3-6.2c-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9c1.6 2.3 4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2c-1.4-2.3-4-3.3-5.6-2z"
+              fill="currentColor"></path>
+          </svg>
+        </mdui-icon>
+      </mdui-button-icon>
+      <div class="w-2"></div>
+    </mdui-top-app-bar>
+
+    <mdui-layout-main class="d-flex animate-fade-in duration-800 overflow-x-auto">
+      <div class="flex gap-2 flex-col md:flex-row p-2 h-full">
+        <div class="flex-[3] h-full min-h-0">
+          <mdui-card class="flex h-full flex-col gap-2" variant="filled">
+            <div>
+              <div class="flex h-16 items-center flex-row" style="background-color: rgb(var(--mdui-color-surface));">
+                <div class="w-4"></div>
+                <h3 class="text-xl">Actions</h3>
+              </div>
+              <mdui-divider></mdui-divider>
+            </div>
+            <div class="flex p-2 flex-col gap-2 overflow-y-auto">
+              <mdui-button variant="elevated" id="uploadBtn">Upload boot image</mdui-button>
+              <input style="display: none;" type="file" name="bootImg" id="bootImg" accept=".bin,.img">
+              <mdui-button variant="filled" id="patchBtn" disabled>Patch</mdui-button>
+            </div>
+          </mdui-card>
+        </div>
+        <div class="flex-[5] min-h-0 min-w-0">
+          <mdui-card class="h-full w-full" variant="filled">
+            <mdui-tabs class="h-full" value="tab-2" id="tabs" full-width>
+              <mdui-tab value="tab-1">
+                Kpm
+                <mdui-icon slot="icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 0 24 24">
+                    <path
+                      d="M14.67 5v6.5H9.33V5h5.34zm1 6.5H21V5h-5.33v6.5zm-1 7.5v-6.5H9.33V19h5.34zm1-6.5V19H21v-6.5h-5.33zm-7.34 0H3V19h5.33v-6.5zm0-1V5H3v6.5h5.33z"
+                      fill="currentColor"></path>
+                  </svg>
+                </mdui-icon>
+              </mdui-tab>
+              <mdui-tab id="log-tab" value="tab-2">
+                Log
+                <mdui-icon slot="icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 0 24 24">
+                    <path
+                      d="M14.17 5L19 9.83V19H5V5h9.17m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9.83c0-.53-.21-1.04-.59-1.41l-4.83-4.83c-.37-.38-.88-.59-1.41-.59zM7 15h10v2H7v-2zm0-4h10v2H7v-2zm0-4h7v2H7V7z"
+                      fill="currentColor"></path>
+                  </svg>
+                </mdui-icon>
+              </mdui-tab>
+
+              <mdui-tab-panel class="h-full" slot="panel" value="tab-1">
+                <div class="h-full">
+                  <div class="p-2 flex-col">
+                    <div class="flex h-16 w-full items-center">
+                      <h3 class="text-xl font-bold pl-5">Modules</h3>
+                      <div class="flex-grow-1"></div>
+                      <input style="display: none;" type="file" name="kpm" id="kpm" accept=".kpm" multiple>
+                      <mdui-button id="addModuleButton">
+                        Add
+                        <mdui-icon slot="icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 24 24">
+                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="currentColor"></path>
+                          </svg>
+                        </mdui-icon>
+                      </mdui-button>
+                    </div>
+                    <div class="h-full grow" id='module-container'></div>
+                  </div>
+                </div>
+              </mdui-tab-panel>
+              <mdui-tab-panel id="terminal-container-tab" class="overflow-hidden" slot="panel" value="tab-2">
+                <div class="min-h-0 h-full" id='terminal-container'></div>
+              </mdui-tab-panel>
+            </mdui-tabs>
+          </mdui-card>
+        </div>
+      </div>
+    </mdui-layout-main>
+  </mdui-layout>
+  <script src="/kptools.js"></script>
+  <script type="module" src="/src/main.ts"></script>
+
+</body>
+
+</html>

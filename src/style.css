@@ -1,0 +1,45 @@
+* {
+  --sb-track-color: transprant;
+  --sb-thumb-color: rgb(var(--mdui-color-primary));
+  --sb-size: 8px;
+}
+
+*::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 6px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 6px;
+  border-color: transparent;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  body {
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+  }
+}
+
+mdui-layout {
+  opacity: 0;
+  animation: fadeIn 0.8s ease-in-out forwards;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+@import "tailwindcss";
