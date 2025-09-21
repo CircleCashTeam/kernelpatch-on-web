@@ -1,6 +1,6 @@
 import 'mdui/mdui.css'
 import 'mdui'
-import { Button, ButtonIcon, Card, Dialog, dialog, Icon, ListItem, observeResize, snackbar, Tab, Tabs, TextField } from 'mdui'
+import { Button, ButtonIcon, Card, dialog, Icon, ListItem, observeResize, Tab, TextField } from 'mdui'
 import { alert } from 'mdui'
 import { setColorScheme } from 'mdui/functions/setColorScheme.js'
 import '@xterm/xterm/css/xterm.css'
