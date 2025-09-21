@@ -1,6 +1,8 @@
 // worker.ts
 /// <reference lib="webworker" />
 
+const BASE_URL = '/kernelpatch-on-web/'
+
 interface KpmInfo {
   name?: string;
   version?: string;
@@ -75,7 +77,10 @@ self.addEventListener('message', async (e: MessageEvent) => {
     print('Use superkey: ' + superkey);
 
     print('Loading external scripts...');
-    (self as any).importScripts('/kptools.js', '/magiskboot.js');
+    (self as any).importScripts(
+      BASE_URL + 'kptools.js', 
+      BASE_URL + 'magiskboot.js'
+    );
 
     if (typeof (self as any).kptools !== 'function' || typeof (self as any).magiskboot !== 'function') {
       throw new Error('kptools or magiskboot modules not found');
@@ -89,7 +94,7 @@ self.addEventListener('message', async (e: MessageEvent) => {
       noInitialRun: true,
       locateFile: (path: string) => {
         if (path.endsWith('.wasm')) {
-          return `/${path}`;
+          return `${BASE_URL}${path}`;
         }
         return path;
       }
@@ -101,7 +106,7 @@ self.addEventListener('message', async (e: MessageEvent) => {
       noInitialRun: true,
       locateFile: (path: string) => {
         if (path.endsWith('.wasm')) {
-          return `/${path}`;
+          return `${BASE_URL}${path}`;
         }
         return path;
       }
@@ -125,7 +130,7 @@ self.addEventListener('message', async (e: MessageEvent) => {
     module1.FS.writeFile('/home/web_user/boot.img', bootImgBuffer);
 
     try {
-      const kpimgResponse = await fetch('/kpimg-android');
+      const kpimgResponse = await fetch(`${BASE_URL}kpimg-android`);
       if (kpimgResponse.ok) {
         const kpimgBuffer = new Uint8Array(await kpimgResponse.arrayBuffer());
         module1.FS.writeFile('/home/web_user/kpimg-android', kpimgBuffer);
@@ -135,6 +140,7 @@ self.addEventListener('message', async (e: MessageEvent) => {
       }
     } catch (fetchError) {
       printErr('- Error fetching kpimg-android: ' + (fetchError as Error).message);
+      return
     }
 
     var continue_patch = true
