@@ -9,7 +9,7 @@
         <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p class="text-xs font-semibold uppercase tracking-[0.2em] text-sky-600 dark:text-sky-400">控制中心</p>
-            <h1 class="mt-1 text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">内核补丁工作台</h1>
+            <h1 class="mt-1 text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">在线修补APatch</h1>
             <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-500 dark:text-slate-400">
               上传 boot.img 或内核映像，加载 .kpm 内核模块，编辑事件触发与运行参数，一键执行补丁操作。
             </p>
@@ -287,7 +287,8 @@ async function runPatchSimulation() {
 
     // 4. 上传 kpimg 签名映像
     await step('上传签名映像', async () => {
-      const kpimgResp = await fetch(`/${kpimgName}`)
+      const base = import.meta.env.BASE_URL || '/'
+      const kpimgResp = await fetch(`${base}${kpimgName}`)
       if (!kpimgResp.ok) throw new Error(`无法获取 ${kpimgName}`)
       const kpimgBytes = await kpimgResp.arrayBuffer()
       await worker!.writeFile(kpimgName, kpimgBytes)

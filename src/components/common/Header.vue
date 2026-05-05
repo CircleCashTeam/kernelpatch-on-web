@@ -3,14 +3,15 @@
     <div class="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
       <!-- Logo -->
       <RouterLink to="/" class="flex items-center gap-3 group">
-        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 shadow-sm">
-          <svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 3.75H6.912a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H15M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859M12 3v8.25m0 0l-3-3m3 3l3-3" />
+        <div class="flex h-9 w-9 items-center justify-center">
+          <svg width="36" height="36" viewBox="0 0 100 100">
+            <text x="50" y="80" font-family="Arial" font-size="80" text-anchor="middle">⭕</text>
+            <text x="50" y="65" font-family="Arial" font-size="60" text-anchor="middle">💰</text>
           </svg>
         </div>
         <div class="hidden sm:block">
-          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-sky-600 dark:text-sky-400">Kernel Patch Studio</p>
-          <h1 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">内核补丁工具</h1>
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-sky-600 dark:text-sky-400">CircleCashTeam</p>
+          <h1 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">KernelPatch on Web</h1>
         </div>
       </RouterLink>
 
@@ -80,7 +81,7 @@
             </RouterLink>
           </nav>
           <div class="border-t border-slate-200 px-6 py-4 dark:border-slate-800">
-            <p class="text-xs text-slate-500 dark:text-slate-500">Kernel Patch Studio v0.1.0</p>
+            <p class="text-xs text-slate-500 dark:text-slate-500">CircleCashTeam {{ versionRef }}</p>
           </div>
         </div>
       </div>
@@ -89,12 +90,23 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUiStore } from '../../stores/useUi'
 import DarkModeToggle from './DarkModeToggle.vue'
 
 const route = useRoute()
 const uiStore = useUiStore()
+const versionRef = ref('')
+
+onMounted(async () => {
+  try {
+    const { getVersion, formatKpVersion } = await import('../../lib/kptools')
+    versionRef.value = formatKpVersion(await getVersion())
+  } catch {
+    versionRef.value = '?'
+  }
+})
 
 const navLinks = [
   { path: '/', label: '工作台', icon: '<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 13.5V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 9.75V10.5" /></svg>' },

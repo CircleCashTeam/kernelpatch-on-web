@@ -103,11 +103,24 @@ export async function getIKConfig(
 }
 
 /**
- * 获取 kptools 版本号
+ * 获取 kptools 版本号（十六进制字符串，如 "ab0"）
  */
 export async function getVersion(): Promise<string> {
   const worker = await createKpWorker()
   return worker.getVersion()
+}
+
+/**
+ * 将 kptools 版本号（十六进制字符串）转为 x.y.z 格式
+ * major << 16 | minor << 8 | patch
+ */
+export function formatKpVersion(hexStr: string): string {
+  const num = parseInt(hexStr, 16)
+  if (isNaN(num)) return hexStr
+  const major = (num >> 16) & 0xff
+  const minor = (num >> 8) & 0xff
+  const patch = num & 0xff
+  return `${major}.${minor}.${patch}`
 }
 
 // ─── 虚拟文件系统辅助函数 ────────────────────────────────
