@@ -54,34 +54,36 @@
 
     <!-- Mobile sidebar overlay -->
     <Transition name="sidebar">
-      <div v-if="uiStore.sidebarOpen" class="fixed inset-0 z-40 md:hidden">
-        <div class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm" @click="uiStore.toggleSidebar()" />
-        <div class="fixed inset-y-0 right-0 z-50 flex w-72 flex-col border-l border-slate-200 bg-white shadow-xl dark:border-slate-800 dark:bg-slate-950">
-          <div class="flex items-center justify-between border-b border-slate-200 px-6 py-4 dark:border-slate-800">
-            <span class="text-sm font-semibold text-slate-900 dark:text-white">导航菜单</span>
-            <button @click="uiStore.toggleSidebar()" class="rounded-lg p-1 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">
+      <div v-if="uiStore.sidebarOpen" class="fixed inset-0 z-50 flex md:hidden">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/70" @click="uiStore.toggleSidebar()" />
+        <!-- Panel -->
+        <div class="relative ml-auto flex h-dvh w-80 max-w-[85vw] flex-col bg-white shadow-2xl dark:bg-slate-900">
+          <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4 dark:border-slate-800">
+            <span class="text-sm font-bold text-slate-900 dark:text-white">导航菜单</span>
+            <button @click="uiStore.toggleSidebar()" class="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-300">
               <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
-          <nav class="flex-1 space-y-1 px-4 py-6">
+          <nav class="flex-1 space-y-1 overflow-y-auto px-3 py-4">
             <RouterLink
               v-for="link in navLinks"
               :key="link.path"
               :to="link.path"
               @click="uiStore.toggleSidebar()"
-              class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-colors"
+              class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition-colors"
               :class="isActive(link.path)
-                ? 'bg-sky-50 text-sky-700 dark:bg-sky-950/50 dark:text-sky-400'
-                : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800'"
+                ? 'bg-sky-100 text-sky-800 dark:bg-sky-900/60 dark:text-sky-300'
+                : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'"
             >
-              <span v-html="link.icon" class="h-5 w-5" />
+              <span v-html="link.icon" class="h-5 w-5 shrink-0" />
               {{ link.label }}
             </RouterLink>
           </nav>
-          <div class="border-t border-slate-200 px-6 py-4 dark:border-slate-800">
-            <p class="text-xs text-slate-500 dark:text-slate-500">CircleCashTeam {{ versionRef }}</p>
+          <div class="border-t border-slate-200 px-5 py-4 dark:border-slate-800">
+            <p class="text-xs text-slate-500 dark:text-slate-400">CircleCashTeam {{ versionRef }}</p>
           </div>
         </div>
       </div>
@@ -121,19 +123,21 @@ function isActive(path: string) {
 </script>
 
 <style scoped>
-.sidebar-enter-active, .sidebar-leave-active {
-  transition: opacity 0.2s ease;
-}
-.sidebar-enter-active > div:last-child,
-.sidebar-leave-active > div:last-child {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
 .sidebar-enter-from,
 .sidebar-leave-to {
   opacity: 0;
 }
+.sidebar-enter-active,
+.sidebar-leave-active {
+  transition: opacity 0.2s ease;
+}
+
 .sidebar-enter-from > div:last-child,
 .sidebar-leave-to > div:last-child {
   transform: translateX(100%);
+}
+.sidebar-enter-active > div:last-child,
+.sidebar-leave-active > div:last-child {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 </style>
