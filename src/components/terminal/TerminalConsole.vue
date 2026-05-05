@@ -50,11 +50,12 @@
 
 <script setup lang="ts">
 import { ref, watch, nextTick } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useTerminalStore } from '../../stores/useTerminal'
 import type { LogEntry } from '../../stores/useTerminal'
 
 const terminalStore = useTerminalStore()
-const logs = terminalStore.logs
+const { logs } = storeToRefs(terminalStore)
 const terminalRef = ref<HTMLElement | null>(null)
 
 function clearLogs() {

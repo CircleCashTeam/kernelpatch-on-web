@@ -8,20 +8,12 @@ export const useModulesStore = defineStore('modules', () => {
   const bootImage = ref<BootImageFile | null>(null)
   const modules = ref<KpmModule[]>([])
   const mode = ref<PatchMode>('android')
-  const password = ref('')
+  const rootKey = ref('')
 
   const enabledModules = computed(() => modules.value.filter((m) => m.enabled))
   const disabledModules = computed(() => modules.value.filter((m) => !m.enabled))
   const moduleCount = computed(() => modules.value.length)
   const hasBootImage = computed(() => bootImage.value !== null)
-
-  const passwordError = computed(() => {
-    if (!password.value) return '启动密码为必填项'
-    const hasLetter = /[a-zA-Z]/.test(password.value)
-    const hasDigit = /\d/.test(password.value)
-    if (!hasLetter || !hasDigit) return '密码必须同时包含字母和数字'
-    return ''
-  })
 
   function setBootImage(file: BootImageFile) {
     bootImage.value = file
@@ -71,7 +63,7 @@ export const useModulesStore = defineStore('modules', () => {
 
   return {
     bootImage, modules, enabledModules, disabledModules, moduleCount, hasBootImage,
-    mode, password, passwordError,
+    mode, rootKey,
     setBootImage, clearBootImage, addKpmModule, removeModule, updateModule,
     toggleModuleEnabled, moveModule, clearModules, clearAll,
   }

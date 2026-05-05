@@ -132,27 +132,19 @@
         </div>
       </div>
 
-      <!-- Password Input -->
+      <!-- Root Key Input -->
       <div class="rounded-xl border border-slate-200/70 bg-white p-4 shadow-sm dark:border-slate-800/70 dark:bg-slate-900/60">
         <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">
-          启动密码 <span class="text-red-500">*</span>
+          Root Key <span class="text-xs font-normal text-slate-400">(选填)</span>
         </label>
-        <p class="mt-0.5 text-xs text-slate-400">设置内核启动密码保护，必须包含字母和数字</p>
+        <p class="mt-0.5 text-xs text-slate-400">设置内核 Root Key，用于提权认证</p>
         <div class="mt-3">
           <input
-            v-model="modulesStore.password"
+            v-model="modulesStore.rootKey"
             type="text"
-            placeholder="请输入启动密码"
-            :class="[
-              'w-full rounded-lg border bg-white px-4 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:ring-2',
-              modulesStore.passwordError
-                ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20 dark:border-red-500'
-                : 'border-slate-300 focus:border-sky-500 focus:ring-sky-500/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-sky-500'
-            ]"
-          />
-          <p v-if="modulesStore.passwordError" class="mt-1.5 text-xs text-red-500">
-            {{ modulesStore.passwordError }}
-          </p>
+            placeholder="输入 Root Key（留空则不设置）"
+            class="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-sky-500"
+            />
         </div>
       </div>
     </div>
@@ -192,6 +184,8 @@ const canRunPatch = computed(() => modulesStore.hasBootImage)
 
 const editingModuleId = ref<string | null>(null)
 
+  modulesStore.rootKey = "su"
+
 function openEditor(id: string) {
   editingModuleId.value = id
 }
@@ -211,15 +205,10 @@ async function runPatchSimulation() {
     return
   }
 
-  if (modulesStore.passwordError) {
-    terminalStore.appendLog(`❌ ${modulesStore.passwordError}`, 'error')
-    return
-  }
-
   const boot = modulesStore.bootImage
   const activeModules = modulesStore.enabledModules
   const isAndroid = modulesStore.mode === 'android'
-  const password = modulesStore.password
+  const rootKey = modulesStore.rootKey
 
   terminalStore.appendLog('═══════════════════════════════════════', 'system')
   terminalStore.appendLog(`🚀 开始补丁: ${boot.name}`, 'system')
@@ -229,7 +218,7 @@ async function runPatchSimulation() {
   } else {
     terminalStore.appendLog('📦 未添加 KPM 模块，仅执行内核补丁', 'system')
   }
-  terminalStore.appendLog(`🔑 启动密码: ${'*'.repeat(password.length)}`, 'system')
+  terminalStore.appendLog(`🔑 Root Key: ${rootKey ? '*'.repeat(rootKey.length) : '(未设置)'}`, 'system')
   terminalStore.appendLog('───────────────────────────────────────', 'system')
 
   const kpimgName = isAndroid ? 'kpimg-android' : 'kpimg-linux'
@@ -299,9 +288,12 @@ async function runPatchSimulation() {
       const args: string[] = [
         '-p', '--image', kernelName,
         '--kpimg', kpimgName,
-        '--skey', password,
         '--out', 'kernel_b',
       ]
+
+      if (rootKey) {
+        args.push('-S', rootKey)
+      }
 
       // 为每个启用的 KPM 模块构造参数
       if (activeModules.length > 0) {
